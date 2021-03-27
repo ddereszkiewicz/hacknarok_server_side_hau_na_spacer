@@ -16,8 +16,6 @@ router.get("/all-posts", async (req, res) => {
         dogs.push(dog);
       }
       all[i].dogsArray = dogs;
-
-
     }
     
     return res.send(all);
