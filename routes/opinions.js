@@ -25,10 +25,12 @@ router.post("/add-opinion", async (req, res) => {
     });
     const result = await newOpinion.save();
     const user= await User.findById(evaluatedId)
-    const numberOfOpinions=user.opinionsArray.lenght
-    const newrating=(user.rating*(numberOfOpinions-1)+rating)/numberOfOpinions
+    const numberOfOpinions=user.opinionsArray.length
+    console.log(numberOfOpinions);
+    const newrating=(user.profileRating*(numberOfOpinions-1)+rating)/numberOfOpinions
+    console.log(newrating);
     await User.findByIdAndUpdate(evaluatedId, { $push: { opinionsArray: result._id } });
-    await User.findByIdAndUpdate(evaluatedId, {   rating: newrating });
+    await User.findByIdAndUpdate(evaluatedId, {   profileRating: newrating });
     return res.send(result);
   } catch (error) {
     return res.send({ error });
