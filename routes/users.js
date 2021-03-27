@@ -64,7 +64,7 @@ router.post("/add-user", async (req, res) => {
       return res.send(false);
     }
   } catch (error) {
-    return res.send({ error });
+    return res.send(false);
   }
 });
 
