@@ -1,11 +1,19 @@
 const { Schema, model } = require('mongoose');
 
-// Schema domyślnie dodaje unikalne pole _id, dlatego pomijamy je w deklaracji
 const userSchema = new Schema({
     login: String,
+    password: String,
+    firstName: String,
+    lastName:String,
     email: String,
-    registrationDate: Date,
-    post:[{type: Schema.Types.ObjectId, ref:"Post"}]
+    postsArray:[{type: Schema.Types.ObjectId, ref:"Post"}],
+    dogsArray:[{type: Schema.Types.ObjectId, ref:"Dog"}],
+    opinionsArray:[{type: Schema.Types.ObjectId, ref:"Opinion"}],
+    profileRating: Number,
+    describe: String,
+    userAge: Number,
+    usersToRate:[{type: Schema.Types.ObjectId, ref:"User"}]
+
 });
 
 module.exports = model('User', userSchema);
