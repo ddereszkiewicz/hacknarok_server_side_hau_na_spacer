@@ -42,11 +42,7 @@ router.post("/add-user", async (req, res) => {
 
       const newUser = new User({
         email: email,
-        // postsArray:[],
         profileRating:0,
-        // opinionsArray:[],
-        // usersToRate:[],
-        // dogsArray:[],
         password: password,
         firstName: firstName,
         lastName: lastName,
