@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const User = require("../models/User");
-const Opinion = require("../models/Opinions");
+const Opinion = require("../models/Opinion");
 
 router.get("/all-opinions", async (req, res) => {
   try {
@@ -34,18 +34,7 @@ router.post("/add-opinion", async (req, res) => {
     return res.send({ error });
   }
 });
-//zobaczymy potem :(
-// router.put("/edit-opinion", async (req, res) => {
-//   try {
-//     const idUser = req.body.idUser;
-//     const result = await User.findByIdAndUpdate(idUser, req.body);
-//     const updatedUser = await User.findById(idUser);
-//     return res.send(updatedUser);
-//   } catch (error) {
-//     console.log(error);
-//     return res.send({ error });
-//   }
-// });
+
 
 
 
