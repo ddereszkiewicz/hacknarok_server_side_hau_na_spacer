@@ -8,7 +8,7 @@ const Dog = require("../models/Dog");
 router.get("/all-posts", async (req, res) => {
   try {
     const all = await Post.find();
-    for (i = 0; i < all.length; i++){
+    for (let i = 0; i < all.length; i++){
     const ID_dogs = Post[i].dogsArray;
     let dogs = [];
       for (const idDog of ID_dogs) {

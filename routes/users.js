@@ -39,7 +39,7 @@ router.post("/logging", async (req, res) => {
         let dog = await Dog.findById(idDog);
         dogs.push(dog);
       }
-      user.dogsArray = dogs;
+      user[0].dogsArray = dogs;
       const user_ID_posts = user[0].postsArray;
       let posts = [];
 
@@ -47,7 +47,7 @@ router.post("/logging", async (req, res) => {
         let post = await Posts.findById(idPost);
         posts.push(post);
       }
-      user.postsArray = posts;
+      user[0].postsArray = posts;
 
       const user_ID_opinions = user[0].opinionsArray;
       let opinions = [];
@@ -56,9 +56,9 @@ router.post("/logging", async (req, res) => {
         let opinion = await Posts.findById(idOpinions);
         opinions.push(opinion);
       }
-      user.opinionsArray = opinions;
+      user[0].opinionsArray = opinions;
 
-      return res.send(user);
+      return res.send(user[0]);
     } else {
       return res.send(false);
     }
