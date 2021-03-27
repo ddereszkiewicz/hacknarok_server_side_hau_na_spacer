@@ -29,7 +29,7 @@ router.post("/logging", async (req, res) => {
       email: email,
       password: password,
     });
-    return res.send(user.length === 1 ? true : false);
+    return res.send(user.length === 1 ? user[0] : false);
   } catch (error) {
     return res.send({ error });
   }
