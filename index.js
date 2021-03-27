@@ -1,10 +1,13 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
+const
 const users = require('./routes/users');
 const posts = require('./routes/posts');
 const dogs = require('./routes/dogs');
 const opinions = require('./routes/opinions');
 
+app.use(cors())
 app.use(express.json());
 
 app.use('/users', users);
@@ -33,4 +36,4 @@ mongoose
     });
   })
   .catch(error => console.error('Error connecting to MongoDB', error));
-
+  

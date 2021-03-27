@@ -12,14 +12,24 @@ router.get("/all-users", async (req, res) => {
   }
 });
 
+router.post("/user-by-id", async (req, res) => {
+  try {
+    const { idUser } = req.body;
+    const user = await User.findById(idUser);
+    return res.send(user);
+  } catch (error) {
+    return res.send({ error });
+  }
+});
+
 router.post("/logging", async (req, res) => {
   try {
-    const {  email,password } = req.body;
+    const { email, password } = req.body;
     const user = await User.find({
       email: email,
       password: password,
     });
-    return res.send( user.length === 1 ? true : false)
+    return res.send(user.length === 1 ? true : false);
   } catch (error) {
     return res.send({ error });
   }
@@ -27,7 +37,6 @@ router.post("/logging", async (req, res) => {
 
 router.post("/add-user", async (req, res) => {
   try {
-    
     const {
       email,
       password,
@@ -37,12 +46,11 @@ router.post("/add-user", async (req, res) => {
       userAge,
     } = req.body;
     const isAny = await User.find({ email: email });
-  
-    if (isAny.length === 0) {
 
+    if (isAny.length === 0) {
       const newUser = new User({
         email: email,
-        profileRating:0,
+        profileRating: 0,
         password: password,
         firstName: firstName,
         lastName: lastName,
@@ -50,7 +58,7 @@ router.post("/add-user", async (req, res) => {
         userAge: userAge,
       });
       const result = await newUser.save();
-      
+
       return res.send(result);
     } else {
       return res.send(false);

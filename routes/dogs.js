@@ -13,10 +13,27 @@ router.get("/all-dogs", async (req, res) => {
   }
 });
 
+router.post("/dog-by-id", async (req, res) => {
+  try {
+    const { idDog } = req.body;
+    const dog = await Dog.findById(idDog);
+    return res.send(dog);
+  } catch (error) {
+    return res.send({ error });
+  }
+});
+
 router.post("/add-dog", async (req, res) => {
   try {
-    const { describeDog, dogAge, dogName, breed, attitude,authorId } = req.body;
-    
+    const {
+      describeDog,
+      dogAge,
+      dogName,
+      breed,
+      attitude,
+      authorId,
+    } = req.body;
+
     const newDog = new Dog({
       describeDog: describeDog,
       dogAge: dogAge,
@@ -25,7 +42,7 @@ router.post("/add-dog", async (req, res) => {
       attitude: attitude,
     });
     const result = await newDog.save();
-    
+
     await User.findByIdAndUpdate(authorId, {
       $push: { dogsArray: result._id },
     });
@@ -35,6 +52,7 @@ router.post("/add-dog", async (req, res) => {
     return res.send({ error });
   }
 });
+
 router.put("/edit-dog", async (req, res) => {
   try {
     const dogId = req.body.dogId;
