@@ -1,0 +1,58 @@
+// poczatkowe dodawanie userow (rejestracja)
+http POST localhost:5000/users/add-user email=jkowalski@gmail.com password=Alamakota123 firstName=Janusz lastName=Kowalski describeUser="opis uzytownka1" userAge=33
+http POST localhost:5000/users/add-user email=mnowak@gmail.com password=Alamakota123 firstName=Marcin lastName=Nowak describeUser="opis uzytownka2" userAge=41
+http POST localhost:5000/users/add-user email=jopolski@gmail.com password=alamaKota123 firstName=Jan lastName=Opolski describeUser="opis uzytownka3" userAge=45
+http POST localhost:5000/users/add-user email=example@gmail.com password=alamaKota123 firstName=Dominik lastName=Marcinowski describeUser="opis uzytownka4" userAge=30
+
+// get all users
+http GET localhost:5000/users/all-users
+
+// logowanie istniejacego usera
+http POST localhost:5000/users/logging email=example@gmail.com password=Alamakota123
+
+// edycja usera po id user
+http PUT localhost:5000/users/edit-user idUser=jakiesId email=aaa@gmail.com
+
+// usuwanie usera po id usera
+http DELETE localhost:5000/users/delete-user idUser=jakiesId
+
+
+
+// dodawanie psow po id autora
+ http POST localhost:5000/dogs/add-dog describeDog="sample dog1 describe" dogAge=3 dogName="Pimpek1" breed="Amstaf" attitude="neutralny" authorId=jakiesId
+http POST localhost:5000/dogs/add-dog describeDog="sample dog2 describe" dogAge=1 dogName="Pimpek2" breed="Labrador" attitude="negatywny" authorId=jakiesId
+http POST localhost:5000/dogs/add-dog describeDog="sample dog3 describe" dogAge=5 dogName="Pimpek3" breed="York" attitude="pozytywny" authorId=jakiesId
+
+// get all dogs
+http GET localhost:5000/dogs/all-dogs
+
+// edytowanie psow po id psa
+http PUT localhost:5000/dogs/edit-dog dogId=jakiesId dogAge=6
+
+// dodawanie postow z id psa i id autora
+http POST localhost:5000/posts/add-post describePost="sample describe" contact="123456789" adressCity="Gdynia" adressDistrict="Witomino" adressDetails="Truskawkowa 12/3" time="2h" price="ciasto domowej roboty" dogId=jakiesId authorId=jakiesId
+
+// usuwanie psow po id psa i id wlasciciela
+http DELETE localhost:5000/dogs/delete-dog dogId=jakiesId authorId=jakiesId
+
+
+
+// get all posts
+http GET localhost:5000/posts/all-posts
+
+// usuwanie posta po id posta 
+http DELETE localhost:5000/posts/delete-post postId=jakiesId 
+
+// dodawanie odpowiedzi do posta po id usera (zglaszajacego sie do posta) i id posta
+http POST localhost:5000/posts/add-response userId=jakiesId postId=jakiesId
+
+// zwrot tablicy wszystkich zglaszajacych sie userow do danego posta po id posta
+http POST localhost:5000/posts/users-responded postId=jakiesId
+
+
+
+// dodawanie ocen po id autora ocenianego
+http POST localhost:5000/opinions/add-opinion describeOpinion="sample describe" rating=1 authorId=jakiesId evaluatedId=jakiesId
+
+// get all opinions
+http GET localhost:5000/opinions/all-opinions
