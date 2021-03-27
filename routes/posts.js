@@ -8,12 +8,12 @@ const Dog = require("../models/Dog");
 router.get("/all-posts", async (req, res) => {
   try {
     const all = await Post.find();
-    for (let i = 0; i < all.length; i++){
-    const id = all[i].dogId;
-    let dog = await Dog.findById(id);
-    all[i].dogId = dog;
+    for (let i = 0; i < all.length; i++) {
+      const id = all[i].dogId;
+      let dog = await Dog.findById(id);
+      all[i].dogId = dog;
     }
-    
+
     return res.send(all);
   } catch (error) {
     return res.send({ error });

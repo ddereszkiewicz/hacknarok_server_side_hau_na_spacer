@@ -35,15 +35,14 @@ router.post("/logging", async (req, res) => {
     if (user.length === 1) {
       const user_ID_dogs = user[0].dogsArray;
       let dogs = [];
-
       for (const idDog of user_ID_dogs) {
         let dog = await Dog.findById(idDog);
         dogs.push(dog);
       }
       user[0].dogsArray = dogs;
+
       const user_ID_posts = user[0].postsArray;
       let posts = [];
-
       for (const idPost of user_ID_posts) {
         let post = await Post.findById(idPost);
         posts.push(post);
@@ -52,16 +51,14 @@ router.post("/logging", async (req, res) => {
 
       const user_ID_opinions = user[0].opinionsArray;
       let opinions = [];
-
       for (const idOpinion of user_ID_opinions) {
         let opinion = await Opinion.findById(idOpinion);
         opinions.push(opinion);
       }
       user[0].opinionsArray = opinions;
 
-      const user_ID_rates= user[0].usersToRate;
+      const user_ID_rates = user[0].usersToRate;
       let rates = [];
-
       for (const idUser of user_ID_rates) {
         let rate = await User.findById(idUser);
         rates.push(rate);
@@ -110,18 +107,69 @@ router.post("/add-user", async (req, res) => {
   }
 });
 
-router.post("/users-dog", async (req, res) => {
+router.post("/user-dogs", async (req, res) => {
   try {
     const userId = req.body.userId;
     const user = await User.findById(userId);
     const user_ID_dogs = user.dogsArray;
     let dogs = [];
-
     for (const idDog of user_ID_dogs) {
       let dog = await Dog.findById(idDog);
       dogs.push(dog);
     }
+    user.dogsArray = dogs;
     return res.send(dogs);
+  } catch (error) {
+    return res.send({ error });
+  }
+});
+
+router.post("/user-posts", async (req, res) => {
+  try {
+    const userId = req.body.userId;
+    const user = await User.findById(userId);
+    const user_ID_posts = user.postsArray;
+    let posts = [];
+    for (const idPost of user_ID_posts) {
+      let post = await Post.findById(idPost);
+      posts.push(post);
+    }
+    user.postsArray = posts;
+    return res.send(posts);
+  } catch (error) {
+    return res.send({ error });
+  }
+});
+
+router.post("/user-opinions", async (req, res) => {
+  try {
+    const userId = req.body.userId;
+    const user = await User.findById(userId);
+    const user_ID_opinions = user.opinionsArray;
+    let opinions = [];
+    for (const idOpinion of user_ID_opinions) {
+      let opinion = await Opinion.findById(idOpinion);
+      opinions.push(opinion);
+    }
+    user.opinionsArray = opinions;
+    return res.send(opinions);
+  } catch (error) {
+    return res.send({ error });
+  }
+});
+
+router.post("/user-to-rate-users", async (req, res) => {
+  try {
+    const userId = req.body.userId;
+    const user = await User.findById(userId);
+    const user_ID_rates = user.usersToRate;
+    let rates = [];
+    for (const idUser of user_ID_rates) {
+      let rate = await User.findById(idUser);
+      rates.push(rate);
+    }
+    user.usersToRate = rates;
+    return res.send(rates);
   } catch (error) {
     return res.send({ error });
   }
