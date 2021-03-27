@@ -8,7 +8,6 @@ app.use(express.json());
 // „Podłączamy” obsługę „endpointów”, które zdefiniowaliśmy dla kolekcji 'users' w katalogu routes/users.js
 app.use('/users', users);
 app.use('/posts', posts);
-
 require('dotenv').config();
 const dbConnData = {
     host: process.env.MONGO_HOST || '127.0.0.1',

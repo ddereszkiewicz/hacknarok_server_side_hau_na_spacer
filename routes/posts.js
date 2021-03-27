@@ -39,6 +39,7 @@ router.post("add-post", async (req, res) => {
       authorId: authorId,
     });
     const result = await newPost.save();
+    await User.findByIdAndUpdate(authorId, { $push: { postsArray: result._id } });
     return res.send(result);
   } catch (error) {
     return res.send({ error });
@@ -57,36 +58,32 @@ router.post("/add-response", async (req, res) => {
   }
 });
 
-// router.get("/:id", async (req, res) => {
-//   try {
-//     const id = req.params.id;
-//     post = await Post.findById(id);
-//     return res.send(post);
-//   } catch (error) {
-//     return res.send({ error });
-//   }
-// });
-
-// router.post("/delete-post", async (req, res) => {
-//   try {
-//     const id = req.params.userId;
-//     const post = new Post({ ...req.body, author: id });
-//     const createdPost = await post.save();
-//     await User.findByIdAndUpdate(id, { $push: { post: createdPost._id } });
-//     return res.send(true);
-//   } catch (error) {
-//     return res.send(error);
-//   }
-// });
-
 router.delete("/delete-post", async (req, res) => {
   try {
     const postId = req.body.postId;
+    const authorId= req.body.authorId;
     await Post.findByIdAndDelete(postId);
+    await User.findByIdAndUpdate(authorId, { $pull: { postsArray: postId } });
     return res.send(true);
   } catch (error) {
     return res.send(error);
   }
 });
+
+router.post("/users-responded", async (req, res) => {
+  try {
+    const postId=req.body.postId
+    const users=await Post.aggregate()
+    .match({_id: postId})
+    .lookup({from: 'users', localField: 'responses', foreignField: '_id', as: 'users'})
+    .project({_id:0,users:1})
+
+    return res.send(users);
+    
+  } catch (error) {
+    return res.send({ error });
+  }
+});
+
 
 module.exports = router;
