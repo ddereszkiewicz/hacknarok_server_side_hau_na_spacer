@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 
 const User = require("../models/User");
+const Dog = require("../models/Dog");
+const Post = require("../models/Post");
 
 router.get("/all-users", async (req, res) => {
   try {
@@ -29,7 +31,37 @@ router.post("/logging", async (req, res) => {
       email: email,
       password: password,
     });
-    return res.send(user.length === 1 ? user[0] : false);
+    if (user.length === 1) {
+      const user_ID_dogs = user[0].dogsArray;
+      let dogs = [];
+
+      for (const idDog of user_ID_dogs) {
+        let dog = await Dog.findById(idDog);
+        dogs.push(dog);
+      }
+      user.dogsArray = dogs;
+      const user_ID_posts = user[0].postsArray;
+      let posts = [];
+
+      for (const idPost of user_ID_posts) {
+        let post = await Posts.findById(idPost);
+        posts.push(post);
+      }
+      user.postsArray = posts;
+
+      const user_ID_opinions = user[0].opinionsArray;
+      let opinions = [];
+
+      for (const idOpinions of user_ID_opinions) {
+        let opinion = await Posts.findById(idOpinions);
+        opinions.push(opinion);
+      }
+      user.opinionsArray = opinions;
+
+      return res.send(user);
+    } else {
+      return res.send(false);
+    }
   } catch (error) {
     return res.send({ error });
   }
@@ -68,22 +100,22 @@ router.post("/add-user", async (req, res) => {
   }
 });
 
-// router.post("/users-responded", async (req, res) => {
-//   try {
-//     const postId = req.body.postId;
-//     const post = await Post.findById(postId);
-//     const responded_ID_users = post.responses;
-//     let responded_users = [];
+router.post("/users-dog", async (req, res) => {
+  try {
+    const userId = req.body.userId;
+    const user = await User.findById(userId);
+    const user_ID_dogs = user.dogsArray;
+    let dogs = [];
 
-//     for (const idUser of responded_ID_users) {
-//       let user = await User.findById(idUser);
-//       responded_users.push(user);
-//     }
-//     return res.send(responded_users);
-//   } catch (error) {
-//     return res.send({ error });
-//   }
-// });
+    for (const idDog of user_ID_dogs) {
+      let dog = await Dog.findById(idDog);
+      dogs.push(dog);
+    }
+    return res.send(dogs);
+  } catch (error) {
+    return res.send({ error });
+  }
+});
 
 router.put("/edit-user", async (req, res) => {
   try {

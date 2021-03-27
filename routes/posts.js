@@ -8,6 +8,18 @@ const Dog = require("../models/Dog");
 router.get("/all-posts", async (req, res) => {
   try {
     const all = await Post.find();
+    for (i = 0; i < all.length; i++){
+    const ID_dogs = Post[i].dogsArray;
+    let dogs = [];
+      for (const idDog of ID_dogs) {
+        let dog = await Dog.findById(idDog);
+        dogs.push(dog);
+      }
+      all[i].dogsArray = dogs;
+
+
+    }
+    
     return res.send(all);
   } catch (error) {
     return res.send({ error });
