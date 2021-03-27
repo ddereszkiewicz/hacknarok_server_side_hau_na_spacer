@@ -70,7 +70,7 @@ router.put("/edit-user", async (req, res) => {
 router.delete("/delete-user", async (req, res) => {
   try {
     const idUser = req.params.idUser;
-    const all = await User.findByIdAndDelete(idUser);
+    const delUser = await User.findByIdAndDelete(idUser);
     return res.send(true);
   } catch (error) {
     console.log(error);
