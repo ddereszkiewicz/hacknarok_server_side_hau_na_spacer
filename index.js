@@ -2,20 +2,23 @@ const express = require('express');
 const app = express();
 const users = require('./routes/users');
 const posts = require('./routes/posts');
+const dogs = require('./routes/dogs');
+const opinions = require('./routes/opinions');
 
 app.use(express.json());
 
-// „Podłączamy” obsługę „endpointów”, które zdefiniowaliśmy dla kolekcji 'users' w katalogu routes/users.js
 app.use('/users', users);
 app.use('/posts', posts);
+app.use('/dogs', dogs);
+app.use('/opinions', opinions);
+
 require('dotenv').config();
 const dbConnData = {
     host: process.env.MONGO_HOST || '127.0.0.1',
     port: process.env.MONGO_PORT || 27017,
     database: process.env.MONGO_DATABASE || 'local'
 };
-// Łączymy się z bazą i „stawiamy” serwer API
-// Do kontaktu z serwerem MongoDB wykorzystamy bibliotekę Mongoose
+
 
 const mongoose = require('mongoose');
 

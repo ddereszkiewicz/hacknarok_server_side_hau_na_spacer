@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router({ mergeParams: true });
 
 const Dog = require("../models/Dog");
+const User = require("../models/User");
 
 router.get("/all-dogs", async (req, res) => {
   try {
@@ -32,11 +33,11 @@ router.post("/add-dog", async (req, res) => {
     return res.send({ error });
   }
 });
-router.post("/edit-dog", async (req, res) => {
+router.put("/edit-dog", async (req, res) => {
   try {
-    const idDog = req.body.idDog;
-    const result = await Dog.findByIdAndUpdate(idDog, req.body);
-    const updatedDog = await Dog.findById(idDog);
+    const dogId = req.body.dogId;
+    const result = await Dog.findByIdAndUpdate(dogId, req.body);
+    const updatedDog = await Dog.findById(dogId);
     return res.send(updatedDog);
   } catch (error) {
     return res.send({ error });

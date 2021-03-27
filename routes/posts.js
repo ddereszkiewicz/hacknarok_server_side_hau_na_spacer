@@ -39,7 +39,9 @@ router.post("add-post", async (req, res) => {
       authorId: authorId,
     });
     const result = await newPost.save();
-    await User.findByIdAndUpdate(authorId, { $push: { postsArray: result._id } });
+    await User.findByIdAndUpdate(authorId, {
+      $push: { postsArray: result._id },
+    });
     return res.send(result);
   } catch (error) {
     return res.send({ error });
@@ -61,7 +63,7 @@ router.post("/add-response", async (req, res) => {
 router.delete("/delete-post", async (req, res) => {
   try {
     const postId = req.body.postId;
-    const authorId= req.body.authorId;
+    const authorId = req.body.authorId;
     await Post.findByIdAndDelete(postId);
     await User.findByIdAndUpdate(authorId, { $pull: { postsArray: postId } });
     return res.send(true);
@@ -72,18 +74,22 @@ router.delete("/delete-post", async (req, res) => {
 
 router.post("/users-responded", async (req, res) => {
   try {
-    const postId=req.body.postId
-    const users=await Post.aggregate()
-    .match({_id: postId})
-    .lookup({from: 'users', localField: 'responses', foreignField: '_id', as: 'users'})
-    .project({_id:0,users:1})
+    const postId = req.body.postId;
+    //to może nie działać 
+    const responded_users = await Post.aggregate()
+      .match({ _id: postId })
+      .lookup({
+        from: "users",
+        localField: "responses",
+        foreignField: "_id",
+        as: "users",
+      })
+      .project({ _id: 0, users: 1 });
 
-    return res.send(users);
-    
+    return res.send(responded_users);
   } catch (error) {
     return res.send({ error });
   }
 });
-
 
 module.exports = router;
