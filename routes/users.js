@@ -4,6 +4,7 @@ const router = express.Router();
 const User = require("../models/User");
 const Dog = require("../models/Dog");
 const Post = require("../models/Post");
+const Opinion = require("../models/Opinion");
 
 router.get("/all-users", async (req, res) => {
   try {
@@ -44,7 +45,7 @@ router.post("/logging", async (req, res) => {
       let posts = [];
 
       for (const idPost of user_ID_posts) {
-        let post = await Posts.findById(idPost);
+        let post = await Post.findById(idPost);
         posts.push(post);
       }
       user[0].postsArray = posts;
@@ -52,11 +53,20 @@ router.post("/logging", async (req, res) => {
       const user_ID_opinions = user[0].opinionsArray;
       let opinions = [];
 
-      for (const idOpinions of user_ID_opinions) {
-        let opinion = await Posts.findById(idOpinions);
+      for (const idOpinion of user_ID_opinions) {
+        let opinion = await Opinion.findById(idOpinion);
         opinions.push(opinion);
       }
       user[0].opinionsArray = opinions;
+
+      const user_ID_rates= user[0].usersToRate;
+      let rates = [];
+
+      for (const idUser of user_ID_rates) {
+        let rate = await User.findById(idUser);
+        rates.push(rate);
+      }
+      user[0].usersToRate = rates;
 
       return res.send(user[0]);
     } else {
