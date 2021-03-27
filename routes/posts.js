@@ -9,13 +9,9 @@ router.get("/all-posts", async (req, res) => {
   try {
     const all = await Post.find();
     for (let i = 0; i < all.length; i++){
-    const ID_dogs = Post[i].dogsArray;
-    let dogs = [];
-      for (const idDog of ID_dogs) {
-        let dog = await Dog.findById(idDog);
-        dogs.push(dog);
-      }
-      all[i].dogsArray = dogs;
+    const id = all[i].dogId;
+    let dog = await Dog.findById(id);
+    all[i].dogId = dog;
     }
     
     return res.send(all);
