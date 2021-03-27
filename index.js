@@ -18,10 +18,7 @@ const dbConnData = {
     port: process.env.MONGO_PORT || 27017,
     database: process.env.MONGO_DATABASE || 'local'
 };
-
-
 const mongoose = require('mongoose');
-
 mongoose
   .connect(`mongodb://${dbConnData.host}:${dbConnData.port}/${dbConnData.database}`, {
     useNewUrlParser: true,
