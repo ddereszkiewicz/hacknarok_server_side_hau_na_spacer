@@ -6,7 +6,7 @@ const User = require("../models/User");
 
 router.get("/all-dogs", async (req, res) => {
   try {
-    const all = await Dogs.find();
+    const all = await Dog.find();
     return res.send(all);
   } catch (error) {
     return res.send({ error });
@@ -15,7 +15,8 @@ router.get("/all-dogs", async (req, res) => {
 
 router.post("/add-dog", async (req, res) => {
   try {
-    const { describeDog, dogAge, dogName, breed, attitude } = req.body;
+    const { describeDog, dogAge, dogName, breed, attitude,authorId } = req.body;
+    
     const newDog = new Dog({
       describeDog: describeDog,
       dogAge: dogAge,
@@ -24,6 +25,7 @@ router.post("/add-dog", async (req, res) => {
       attitude: attitude,
     });
     const result = await newDog.save();
+    
     await User.findByIdAndUpdate(authorId, {
       $push: { dogsArray: result._id },
     });

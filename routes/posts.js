@@ -14,7 +14,7 @@ router.get("/all-posts", async (req, res) => {
   }
 });
 
-router.post("add-post", async (req, res) => {
+router.post("/add-post", async (req, res) => {
   try {
     const {
       describePost,
@@ -55,7 +55,6 @@ router.post("/add-response", async (req, res) => {
 
     res.send(true);
   } catch (error) {
-    console.log(error);
     res.send(error);
   }
 });
@@ -63,9 +62,11 @@ router.post("/add-response", async (req, res) => {
 router.delete("/delete-post", async (req, res) => {
   try {
     const postId = req.body.postId;
-    const authorId = req.body.authorId;
+    const post = await Post.findById(postId);
+    await User.findByIdAndUpdate(post.authorId, {
+      $pull: { postsArray: postId },
+    });
     await Post.findByIdAndDelete(postId);
-    await User.findByIdAndUpdate(authorId, { $pull: { postsArray: postId } });
     return res.send(true);
   } catch (error) {
     return res.send(error);
@@ -75,17 +76,14 @@ router.delete("/delete-post", async (req, res) => {
 router.post("/users-responded", async (req, res) => {
   try {
     const postId = req.body.postId;
-    //to może nie działać 
-    const responded_users = await Post.aggregate()
-      .match({ _id: postId })
-      .lookup({
-        from: "users",
-        localField: "responses",
-        foreignField: "_id",
-        as: "users",
-      })
-      .project({ _id: 0, users: 1 });
+    const post = await Post.findById(postId);
+    const responded_ID_users = post.responses;
+    let responded_users = [];
 
+    for (const idUser of responded_ID_users) {
+      let user = await User.findById(idUser);
+      responded_users.push(user);
+    }
     return res.send(responded_users);
   } catch (error) {
     return res.send({ error });
