@@ -1,7 +1,6 @@
 const { Schema, model } = require('mongoose');
 
 const userSchema = new Schema({
-    login: String,
     password: String,
     firstName: String,
     lastName:String,
@@ -10,7 +9,7 @@ const userSchema = new Schema({
     dogsArray:[{type: Schema.Types.ObjectId, ref:"Dog"}],
     opinionsArray:[{type: Schema.Types.ObjectId, ref:"Opinion"}],
     profileRating: Number,
-    describe: String,
+    describeUser: String,
     userAge: Number,
     usersToRate:[{type: Schema.Types.ObjectId, ref:"User"}]
 
