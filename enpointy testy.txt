@@ -1,3 +1,5 @@
+// USERS
+
 // poczatkowe dodawanie userow (rejestracja)
 http POST localhost:5000/users/add-user email=jkowalski@gmail.com password=Alamakota123 firstName=Janusz lastName=Kowalski describeUser="opis uzytownka1" userAge=33
 http POST localhost:5000/users/add-user email=mnowak@gmail.com password=Alamakota123 firstName=Marcin lastName=Nowak describeUser="opis uzytownka2" userAge=41
@@ -23,21 +25,23 @@ http DELETE localhost:5000/users/delete-user idUser=jakiesId
 
 // POSTS
 
+// dodawanie postow z id psa i id autora
+http POST localhost:5000/posts/add-post describePost="sample describe" contact="123456789" adressCity="Gdynia" adressDistrict="Witomino" adressDetails="Truskawkowa 12/3" time="2h" price="ciasto domowej roboty" dogId=jakiesId authorId=jakiesId
+
 // get all posts
 http GET localhost:5000/posts/all-posts
 
-// usuwanie posta po id posta 
-http DELETE localhost:5000/posts/delete-post postId=jakiesId 
+// get one user
+http POST localhost:5000/posts/post-by-id
 
 // dodawanie odpowiedzi do posta po id usera (zglaszajacego sie do posta) i id posta
 http POST localhost:5000/posts/add-response userId=jakiesId postId=jakiesId
 
+// usuwanie posta po id posta 
+http DELETE localhost:5000/posts/delete-post postId=jakiesId 
+
 // zwrot tablicy wszystkich zglaszajacych sie userow do danego posta po id posta
 http POST localhost:5000/posts/users-responded postId=jakiesId
-
-// dodawanie postow z id psa i id autora
-http POST localhost:5000/posts/add-post describePost="sample describe" contact="123456789" adressCity="Gdynia" adressDistrict="Witomino" adressDetails="Truskawkowa 12/3" time="2h" price="ciasto domowej roboty" dogId=jakiesId authorId=jakiesId
-
 
 
 

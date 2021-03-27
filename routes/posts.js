@@ -14,6 +14,16 @@ router.get("/all-posts", async (req, res) => {
   }
 });
 
+router.post("/post-by-id", async (req, res) => {
+  try {
+    const { idPost } = req.body;
+    const post = await Post.findById(idPost);
+    return res.send(post);
+  } catch (error) {
+    return res.send({ error });
+  }
+});
+
 router.post("/add-post", async (req, res) => {
   try {
     const {
