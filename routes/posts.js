@@ -110,9 +110,10 @@ router.post("/delete-post", async (req, res) => {
     // await User.findByIdAndUpdate(post.authorId, {
     //   $push: { usersToRate: workerId },
     // });
-    await User.findByIdAndUpdate(workerId, {
-      $pull: { jobsArray: postId },
-    });
+    // await User.findByIdAndUpdate(workerId, {
+    //   $pull: { jobsArray: postId },
+    // });
+
     await Post.findByIdAndDelete(postId);
 
     return res.send(postId);
