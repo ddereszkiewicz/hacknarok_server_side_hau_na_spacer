@@ -78,6 +78,12 @@ router.post("/logging", async (req, res) => {
       let posts = [];
       for (const idPost of user_ID_posts) {
         let post = await Post.findById(idPost);
+        let newResponses = [];
+        for (const idResponse of post.responses) {
+          let user = await User.findById(idResponse);
+          newResponses.push(user);
+        }
+        post.responses = newResponses;
         posts.push(post);
       }
       user[0].postsArray = posts;
@@ -97,6 +103,13 @@ router.post("/logging", async (req, res) => {
         rates.push(rate);
       }
       user[0].usersToRate = rates;
+
+      let rates2 = [];
+      for (const idUser of user_ID_rates) {
+        let rate = await User.findById(idUser);
+        rates.push(rate);
+      }
+      user[0].usersToRate = rates2;
 
       return res.send(user[0]);
     } else {
@@ -235,7 +248,7 @@ router.put("/edit-user", async (req, res) => {
     const idUser = req.body.idUser;
     const result = await User.findByIdAndUpdate(idUser, req.body);
     const user = await User.findById(idUser);
-    
+
     const user_ID_dogs = user.dogsArray;
     let dogs = [];
     for (const idDog of user_ID_dogs) {
@@ -269,8 +282,6 @@ router.put("/edit-user", async (req, res) => {
     user.usersToRate = rates;
 
     return res.send(user);
-
-    
   } catch (error) {
     console.log(error);
     return res.send({ error });
