@@ -100,16 +100,16 @@ router.post("/accept-post", async (req, res) => {
 
 router.post("/delete-post", async (req, res) => {
   try {
-    const workerId = req.body.workerId;
+    // const workerId = req.body.workerId;
     const postId = req.body.postId;
     const post = await Post.findById(postId);
 
     await User.findByIdAndUpdate(post.authorId, {
       $pull: { postsArray: postId },
     });
-    await User.findByIdAndUpdate(post.authorId, {
-      $push: { usersToRate: workerId },
-    });
+    // await User.findByIdAndUpdate(post.authorId, {
+    //   $push: { usersToRate: workerId },
+    // });
     await User.findByIdAndUpdate(workerId, {
       $pull: { jobsArray: postId },
     });
