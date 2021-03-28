@@ -88,8 +88,8 @@ router.post("/logging", async (req, res) => {
         let post = await Post.findById(idPost);
         let newResponses = [];
         for (const idResponse of post.responses) {
-          let user = await User.findById(idResponse);
-          newResponses.push(user);
+          let user1 = await User.findById(idResponse);
+          newResponses.push(user1);
         }
         post.responses = newResponses;
         posts.push(post);
@@ -146,7 +146,7 @@ router.post("/add-user", async (req, res) => {
     if (isAny.length === 0) {
       const newUser = new User({
         email: email,
-        profileRating: 0,
+        profileRating: (Math.random() * (1.00 - 5.00) + 5.00).toFixed(2),
         password: password,
         firstName: firstName,
         lastName: lastName,
