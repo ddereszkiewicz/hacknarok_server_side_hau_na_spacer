@@ -15,6 +15,7 @@ const userSchema = new Schema({
     unique: true,
     match: [/^\S+@\S+\.\S+$/, "Proszę wprowadzić prawidłowy adres email."],
   },
+  jobsArray: [{ type: Schema.Types.ObjectId, ref: "Post" }],
   postsArray: [{ type: Schema.Types.ObjectId, ref: "Post" }],
   dogsArray: [{ type: Schema.Types.ObjectId, ref: "Dog" }],
   opinionsArray: [{ type: Schema.Types.ObjectId, ref: "Opinion" }],
