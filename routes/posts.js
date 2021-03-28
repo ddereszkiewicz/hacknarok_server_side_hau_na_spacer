@@ -54,7 +54,7 @@ router.post("/add-post", async (req, res) => {
       price: price,
       dogId: dogId,
       authorId: authorId,
-      visible: true
+      visible: true,
     });
     const result = await newPost.save();
     await User.findByIdAndUpdate(authorId, {
@@ -81,11 +81,11 @@ router.post("/accept-post", async (req, res) => {
   try {
     const workerId = req.body.workerId;
     const postId = req.body.postId;
-    await Post.findByIdAndUpdate(postId, {visible: false});
+    await Post.findByIdAndUpdate(postId, { visible: false });
     await User.findByIdAndUpdate(workerId, {
       $push: { jobsArray: postId },
     });
-    const post=findById(postId)
+    const post = findById(postId);
     const id = post.dogId;
     let dog = await Dog.findById(id);
     post.dogId = dog;
@@ -103,7 +103,7 @@ router.post("/delete-post", async (req, res) => {
     const workerId = req.body.workerId;
     const postId = req.body.postId;
     const post = await Post.findById(postId);
-   
+
     await User.findByIdAndUpdate(post.authorId, {
       $pull: { postsArray: postId },
     });
@@ -114,7 +114,7 @@ router.post("/delete-post", async (req, res) => {
       $pull: { jobsArray: postId },
     });
     await Post.findByIdAndDelete(postId);
-    
+
     return res.send(postId);
   } catch (error) {
     return res.send(error);

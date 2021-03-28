@@ -6,8 +6,6 @@ const posts = require("./routes/posts");
 const dogs = require("./routes/dogs");
 const Image = require("./models/Image");
 
-
-
 const opinions = require("./routes/opinions");
 
 app.use(cors());

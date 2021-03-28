@@ -52,6 +52,14 @@ router.post("/user-by-id", async (req, res) => {
     }
     user.usersToRate = rates;
 
+    const user_ID_jobs = user.jobsArray;
+    let jobs = [];
+    for (const idJob of user_ID_jobs) {
+      let job = await Post.findById(idJob);
+      jobs.push(job);
+    }
+    user.jobsArray = jobs;
+
     return res.send(user);
   } catch (error) {
     return res.send({ error });
@@ -104,12 +112,13 @@ router.post("/logging", async (req, res) => {
       }
       user[0].usersToRate = rates;
 
-      let rates2 = [];
-      for (const idUser of user_ID_rates) {
-        let rate = await User.findById(idUser);
-        rates.push(rate);
+      const user_ID_jobs = user[0].jobsArray;
+      let jobs = [];
+      for (const idJob of user_ID_jobs) {
+        let job = await Post.findById(idJob);
+        jobs.push(job);
       }
-      user[0].usersToRate = rates2;
+      user[0].jobsArray = jobs;
 
       return res.send(user[0]);
     } else {
@@ -280,6 +289,14 @@ router.put("/edit-user", async (req, res) => {
       rates.push(rate);
     }
     user.usersToRate = rates;
+
+    const user_ID_jobs = user.jobsArray;
+    let jobs = [];
+    for (const idJob of user_ID_jobs) {
+      let job = await Post.findById(idJob);
+      jobs.push(job);
+    }
+    user.jobsArray = jobs;
 
     return res.send(user);
   } catch (error) {
