@@ -74,6 +74,9 @@ router.post("/logging", async (req, res) => {
   }
 });
 
+const nodemailer = require("nodemailer");
+
+
 router.post("/add-user", async (req, res) => {
   try {
     const {
@@ -97,7 +100,27 @@ router.post("/add-user", async (req, res) => {
         userAge: userAge,
       });
       const result = await newUser.save();
-
+      let transport = nodemailer.createTransport({
+        host: "smtp.mailtrap.io",
+        port: 2525,
+        auth: {
+          user: "bcd31c830cf25b",
+          pass: "80620bc8c57556",
+        },
+      });
+      const message = {
+        from: "HauNaSpacer@poland.pl",
+        to: email,
+        subject: "Witamy na stronie HauNaSpacer.pl", 
+        text: `${firstName} Cieszymy się ,że zarejestrowałeś się na naszej stronie!`, 
+      };
+      transport.sendMail(message, function (err, info) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log(info);
+        }
+      });
       return res.send(result);
     } else {
       return res.send(false);
