@@ -19,6 +19,39 @@ router.post("/user-by-id", async (req, res) => {
   try {
     const { idUser } = req.body;
     const user = await User.findById(idUser);
+
+    const user_ID_dogs = user.dogsArray;
+    let dogs = [];
+    for (const idDog of user_ID_dogs) {
+      let dog = await Dog.findById(idDog);
+      dogs.push(dog);
+    }
+    user.dogsArray = dogs;
+
+    const user_ID_posts = user.postsArray;
+    let posts = [];
+    for (const idPost of user_ID_posts) {
+      let post = await Post.findById(idPost);
+      posts.push(post);
+    }
+    user.postsArray = posts;
+
+    const user_ID_opinions = user.opinionsArray;
+    let opinions = [];
+    for (const idOpinion of user_ID_opinions) {
+      let opinion = await Opinion.findById(idOpinion);
+      opinions.push(opinion);
+    }
+    user.opinionsArray = opinions;
+
+    const user_ID_rates = user.usersToRate;
+    let rates = [];
+    for (const idUser2 of user_ID_rates) {
+      let rate = await User.findById(idUser2);
+      rates.push(rate);
+    }
+    user.usersToRate = rates;
+    
     return res.send(user);
   } catch (error) {
     return res.send({ error });
@@ -76,7 +109,6 @@ router.post("/logging", async (req, res) => {
 
 const nodemailer = require("nodemailer");
 
-
 router.post("/add-user", async (req, res) => {
   try {
     const {
@@ -111,8 +143,8 @@ router.post("/add-user", async (req, res) => {
       const message = {
         from: "HauNaSpacer@poland.pl",
         to: email,
-        subject: "Witamy na stronie HauNaSpacer.pl", 
-        text: `${firstName} Cieszymy się ,że zarejestrowałeś się na naszej stronie!`, 
+        subject: "Witamy na stronie HauNaSpacer.pl",
+        text: `${firstName} Cieszymy się ,że zarejestrowałeś się na naszej stronie!`,
       };
       transport.sendMail(message, function (err, info) {
         if (err) {
