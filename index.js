@@ -4,6 +4,10 @@ const app = express();
 const users = require("./routes/users");
 const posts = require("./routes/posts");
 const dogs = require("./routes/dogs");
+const Image = require("./models/Image");
+
+
+
 const opinions = require("./routes/opinions");
 
 app.use(cors());
@@ -13,7 +17,17 @@ app.use("/users", users);
 app.use("/posts", posts);
 app.use("/dogs", dogs);
 app.use("/opinions", opinions);
-
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+// app.post('/photo',function(req,res){
+//   let newItem = new Image();
+//   newItem.img.data = fs.readFileSync(req.files.userPhoto.path)
+//   newItem.img.contentType = 'image/png';
+//   newItem.save();
+// });
 require("dotenv").config();
 
 const dbConnData = {
