@@ -32,4 +32,3 @@ Web service made with purpose of making quarantined people lifes easier made in 
 App created in order to fulfill the need to walk the dog during quarantine, or in other circumstanses that make walking the dog by oneself impossible. It allows you to post advertisments regarding walking dogs and respond to them. 
 ## Short Demo
 https://youtu.be/m9TgaX_6m3o
-
