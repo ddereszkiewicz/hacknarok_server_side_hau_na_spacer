@@ -4,7 +4,7 @@ Web service made with purpose of making quarantined people lifes easier made in 
 
 ## Contributors
 
-### Frontend (https://github.com/tbielski/hacknarok_frontend_hau_na_spacer)
+### Frontend (https://github.com/ddereszkiewicz/hacknarok_frontend_hau_na_spacer)
 - Aleksandra Jakubik ( https://github.com/aleksandrajakubik )
 - Dawid Dereszkiewicz ( https://github.com/ddereszkiewicz )
 
