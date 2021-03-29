@@ -1,4 +1,4 @@
-# # HAU! Na Spacer
+# HAU! Na Spacer
 
 Web service made with purpose of making quarantined people lifes easier made in 24 hours for Hacknarok contest. https://hacknarok.eestec.pl/
 
